@@ -10,7 +10,7 @@ var settings = {
       password: "password",
     },
     queue:{
-      name:'notifications-test',
+      name:'notifications',
       options: {
         autoDelete: false,
         durable: true
@@ -19,7 +19,7 @@ var settings = {
   },
   irc:{
     server: 'irc.server',
-    nick: 'NotifyBot2',
+    nick: 'NotifyBot',
     options:{
       port: 6697,
       secure: true,
