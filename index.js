@@ -1,5 +1,6 @@
 var irc = require("irc");
 var amqp = require ("amqp");
+var _ = require("underscore");
 var settings = {
   rabbit:{
     server:{
@@ -51,7 +52,30 @@ rconn.on('ready', function(){
         firstJoined = false;
         queue.subscribe({ack: true}, function(message){
           console.log("Got a message: " + message.data.toString());
-          irc_conn.say(settings.irc.channel, message.data.toString());
+          var formatFancy = function(message){
+            console.log("Formatting: " + message);
+            if(_.isArray(message)){
+              console.log("array")
+              return jsonMessage.map(function(subMessage){ return formatFancy(subMessage);}).join("");
+            }
+            if(_.isObject(message)){
+              console.log("object")
+              return irc.colors.wrap(message.color, message.message);
+            }
+            else{
+              console.log("other")
+              return message;
+            }
+          };
+          try{
+            var jsonMessage = JSON.parse(message.data.toString());
+            irc_conn.say(settings.irc.channel, formatFancy(jsonMessage));
+          }
+          catch(err){
+            console.log("Not a json message");
+            console.log(err);
+            irc_conn.say(settings.irc.channel, message.data.toString());
+          }
           setTimeout(function(){
             queue.shift();
           }, settings.irc.floodDelay);
