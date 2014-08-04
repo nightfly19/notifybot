@@ -53,10 +53,10 @@ rconn.on('ready', function(){
         queue.subscribe({ack: true}, function(message){
           console.log("Got a message: " + message.data.toString());
           var formatFancy = function(message){
-            console.log("Formatting: " + message);
+            console.log("Formatting: " + JSON.stringify(message));
             if(_.isArray(message)){
               console.log("array")
-              return jsonMessage.map(function(subMessage){ return formatFancy(subMessage);}).join("");
+              return message.map(function(subMessage){ return formatFancy(subMessage);}).join("");
             }
             if(_.isObject(message)){
               console.log("object")
