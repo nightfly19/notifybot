@@ -1,0 +1,29 @@
+{
+    "irc": {
+        "channel": "channel", 
+        "channelKey": "password", 
+        "floodDelay": 1000, 
+        "nick": "NotifyBot", 
+        "options": {
+            "port": 6697, 
+            "secure": true
+        }, 
+        "server": "irc.server"
+    }, 
+    "rabbit": {
+        "queue": {
+            "name": "notifications", 
+            "options": {
+                "autoDelete": false, 
+                "durable": true
+            }
+        }, 
+        "server": {
+            "host": "amqp.server", 
+            "login": "notifications", 
+            "password": "password", 
+            "port": 5672, 
+            "vhost": "VHOST"
+        }
+    }
+}

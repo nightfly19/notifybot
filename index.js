@@ -1,36 +1,7 @@
 var irc = require("irc");
 var amqp = require ("amqp");
 var _ = require("underscore");
-var settings = {
-  rabbit:{
-    server:{
-      host: "amqp.server",
-      port: 5672,
-      login: "notifications",
-      vhost: "VHOST",
-      password: "password",
-    },
-    queue:{
-      name:'notifications',
-      options: {
-        autoDelete: false,
-        durable: true
-      }
-    }
-  },
-  irc:{
-    server: 'irc.server',
-    nick: 'NotifyBot',
-    options:{
-      port: 6697,
-      secure: true,
-    },
-    channel: "channel",
-    channelKey: "password",
-    floodDelay: 1000
-  }
-};
-
+var settings = require("./settings.json");
 var irc_conn;
 var rconn = amqp.createConnection(settings.rabbit.server);
 
